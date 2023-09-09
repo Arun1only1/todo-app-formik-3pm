@@ -12,10 +12,12 @@ import {
 } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import TodoCheckbox from "./TodoCheckbox";
+import TodoCheckbox from "../TodoCheckbox";
+import TodoList from "./TodoList";
 
 const TodoForm = () => {
   const [todoList, setTodoList] = useState([]);
+  console.log(todoList);
 
   const filterTask = (taskId) => {
     const newTodoList = todoList.filter((item) => item.id !== taskId);
@@ -53,6 +55,7 @@ const TodoForm = () => {
             }}
           >
             <Typography variant="h5">Add todo form</Typography>
+
             <TextField
               required
               label="Title"
@@ -88,28 +91,9 @@ const TodoForm = () => {
       </Formik>
 
       <Divider />
-      <ul>
-        {todoList.map((item) => {
-          return (
-            <li
-              key={item.id}
-              style={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <TodoCheckbox />
 
-              <Typography variant="h6" sx={{ padding: "1rem" }}>
-                {`${item.title} at ${item.date}`}
-              </Typography>
-              <Button
-                sx={{ width: "150px", color: "red" }}
-                onClick={() => filterTask(item.id)}
-              >
-                <MdOutlineDeleteOutline size={30} />
-              </Button>
-            </li>
-          );
-        })}
-      </ul>
+      <TodoList todos={todoList} />
+      <TodoList todos={[{ title: "Eating ramen" }]} />
     </Box>
   );
 };
